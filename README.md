@@ -1,12 +1,133 @@
-# React + Vite
+# CHAPTER 5: CSS IN REACT
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+* their are 4 ways to add css in React.
+    1. Inline Styling
+    2. CSS Files
+    3. CSS modules
+    4. Tailwind CSS
 
-Currently, two official plugins are available:
+## 1. Inline CSS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* we can specify as:
 
-## Expanding the ESLint configuration
+```css
+<h3>Inline CSS</h3>
+<p style={{color: "red", textAlign: 'center'}}>
+    this is paragraph in style.
+</p>
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### NOTE
+
+* the *first set of curly brackets* is used to write **JavaScript expressions**.
+* The *second set of curly brackets* initialize a **JavaScript object**.
+
+### Drawaback
+
+1. One of the benefits of using the inline style approach is that you will have a **simple component-focused styling technique**.
+2. When using an object for styling, you can extend your style by spreading the object(`...args`).
+3. But in a big and complex project where you have hundreds of React components to manage, this might not be the best choice for you.
+4. You can’t specify pseudo classes using inline styles.
+5. That means you can’t define rules like `:hover`, `:focus`, `:active`, and so on. Also, you can’t specify media queries for responsive styling.
+
+## 2. CSS Files
+
+* the way to add css in React is to use `.css` files.
+* Vite already knows how to handle a `.css` file, so all you need to do is `import` the CSS file into your JSX file.
+* You can even include a CSS framework such as `Bootstrap` into React with this approach.
+
+## 3. CSS Modules
+
+* A CSS module is a regular CSS file with all of its class and animation names scoped locally by default.
+* When you build your app, `Vite` will automatically look for CSS files that have the `.module.css` name and process the class names to a new localized name.
+
+## steps
+
+### i. Create the `App.module.css` file in `src` folder
+
+### ii. write the styling according to `classNames` as like
+
+```css
+.BlueParagraph {
+    color: blue;
+    text-align: left;
+}
+.GreenParagraph {
+    color: green;
+    text-align: right;
+}
+```
+
+### iii. Import this styles in `App.jsx` as
+
+```js
+import styles from "./App.module.css";
+```
+
+-------
+
+```css
+    <p className={styles.BlueParagraph}>
+        The weather is sunny today.
+    </p>
+    <p className={styles.GreenParagraph}>
+        Still, don't forget to bring your umbrella!
+    </p>
+```
+
+* Using CSS Modules ensures that your CSS classes are scoped locally, preventing CSS rules from colliding with each other
+* Another advantage of using CSS Modules is that you can compose a new class by inheriting from other classes that you’ve written.
+* Example:
+
+```css
+.button{
+    margin-right: 0.4rem;
+    font-weight: 600;
+    font-size: 20px;
+    border-radius: 6px;
+}
+.second {
+    composes: button; /* '.second' composes '.button' */
+    background-color: red;
+}
+.third {
+    composes:button; /* '.third' composes '.button' */
+    background-color: blue;
+}
+```
+
+## 4. Tailwind CSS
+
+* Tailwind CSS is a modern utility-first CSS framework that allows you to style elements by combining a bunch of classes together.
+* CSS frameworks like 'Bootstrap' and 'Bulma' provide you with high-level components that you can immediately use in your project.
+* When you need to style a button, you just need to apply the classes that contain the desired CSS properties:
+
+```css
+    <button className="btn btn-primary">Subscribe</button>
+```
+
+* When using Bootstrap, the 'btn' class provides a combination of CSS properties such as padding, color, opacity, font weight, and so on.
+* On the other hand, Tailwind gives you utility classes where each class has only one or two properties.
+
+```css
+<button className='px-5 py-2 text-white bg-blue-500 border-2'>
+    Subscribe   
+</button>
+```
+
+* here,  
+    1. `px-5`  is short for padding `padding-left` and `padding-right` with `5px` as size.  
+
+    2. `py-2`  is short for `padding padding-top` and `padding-bottom` with `2px` as `size`.
+
+    3. `text-white`  means `color: white`.
+
+    4. `bg-blue-500`  means `background-color:blue`.
+
+    5. `border-2`  means `border-width:2px`
+
+* To use Tailwind in your project, you need to integrate the required JavaScript library in your project.
+* As you will practice building a React project in the next chapter, I recommend you to use CSS files because it’s the easiest way.
+* You only need to import `.css` file in your `main.jsx file.
+
+## CHAPTER 9: USING FETCH IN REACT

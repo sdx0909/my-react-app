@@ -1,19 +1,22 @@
+import { useState } from "react";
+
+// passing the state in props for as prop to child-component
+// that makes child component to change the state.
 function ParentComponent() {
+  const [name, setName] = useState("John");
   return (
     <>
-      <UserComponent />
-      <ProfileComponent />
-      <FeedComponent />
+      <ChildComponent name={name} setName={setName} />
     </>
   );
 }
-function UserComponent() {
-  return <h2>Usercomponent</h2>;
+function ChildComponent(props) {
+  return (
+    <>
+      <div>Name: {props.name}</div>
+      <button onClick={() => props.setName("Snow")}>Change</button>
+    </>
+  );
 }
-function ProfileComponent() {
-  return <h2>Profilecomponent</h2>;
-}
-function FeedComponent() {
-  return <h2>Feedcomponent</h2>;
-}
+
 export default ParentComponent;

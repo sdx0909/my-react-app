@@ -1,0 +1,23 @@
+.buttonWrapper {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-wrap: wrap;
+}
+
+.button{
+    margin-right: 0.4rem;
+    font-weight: 600;
+    font-size: 20px;
+    border-radius: 6px;
+}
+
+.second {
+    composes: button; 
+    background-color: red;
+}
+
+.third {
+    composes:button;
+    background-color: blue;
+}
