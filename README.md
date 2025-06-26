@@ -1,4 +1,6 @@
-# CHAPTER 5: CSS IN REACT
+# CSS IN REACT
+
+## CHAPTER 5
 
 * their are 4 ways to add css in React.
     1. Inline Styling
@@ -130,4 +132,77 @@ import styles from "./App.module.css";
 * As you will practice building a React project in the next chapter, I recommend you to use CSS files because it’s the easiest way.
 * You only need to import `.css` file in your `main.jsx file.
 
-## CHAPTER 9: USING FETCH IN REACT
+## USING FETCH IN REACT
+
+### CHAPTER 9
+
+* Modern web applications tend to have a modular architecture,where the back end is separated from the front end.
+* The front end app will need to send an HTTP network request to a remote endpoint.
+* React doesn’t tell you how you should send network requests.
+* The library only focuses on rendering UI with data management using props and states.
+* To fetch data using React, you can use any valid JavaScript library like `Axios`, `Superagent`, and even the native `Fetch API`.
+* In this chapter, we’re going to see how to do network requests using Fetch in React.
+
+### `useEffect()` Hook
+
+* *When you create a React application that needs to synchronize with a system outside of React, you need to use the `useEffect` hook.*
+* This hook allows you to run some code after rendering so that you can synchronize your component with some system outside of React.
+* When the hook has finished performing the data request, you can set the `response` into your component states and render the appropriate components based on the state values.
+* To show you an example, let’s fetch data from:
+  
+    ```cmd
+    https://jsonplaceholder.typicode.com/todos/1
+    ```
+
+code:
+
+```js
+function App() {
+  const [title, setTitle] = useState("");
+
+  const getData = async () => {
+    // promise-based-response
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/todos/1"
+    );
+    // console.log(response);
+
+    // json-based-object
+    const task = await response.json();
+
+    console.log(task);
+    setTitle(task.title);
+  };
+
+  // useEffect called initially []
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return <h1>{title}</h1>;
+}
+
+export default App;
+```
+
+* In the code above, we create an App component that has a state called `title`, and we run the `Fetch API` to get a todo task from the API.
+* When a `response` is received, we parse the `JSON string` into a `JavaScript object`, log the object, and then set the `title` state to the `task.title` property value.
+* Here, you can see that the `console.log()` is called `twice`.
+* This is because the `<React.StrictMode>` wrapper always runs a `useEffect` hook twice to help you in development.
+* If you remove the `<React.StrictMode>` wrapper in `main.jsx`, the `useEffect` hook will run only once.
+* The `useEffect` hook itself is a function that accepts two arguments:
+  1. A **callback function** to run on every render
+  2. An **array of state variables** to watch for changes.
+
+* `useEffect` will be skipped if none of the variables are updated.
+* When you want to run `useEffect` *only once, you can pass an empty array as the second argument to the function*, as shown
+in the example above.
+* Note that when you use a framework such as `Next.js`, you probably don’t need to create an effect hook manually as shown below.
+* But it’s still good to know how React works outside of a framework, because you might work with a technology stack that uses a *non-JavaScript* framework such as `Rails` or `Laravel`.
+
+### Summary
+
+* In this chapter, you’ve seen how a React application can send network requests using the *native Fetch API*.
+* React doesn’t tell you what library to use to fetch data. Instead,it only exposes a hook that enables you to synchronize your
+ component to external systems.
+  
